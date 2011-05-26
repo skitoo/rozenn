@@ -31,7 +31,10 @@ package org.rozenn.layout
         /**
          * Build a <code>TraceLayout</code> instance
          * 
-         * @inheritDoc
+         * @param formatter The default formatter for this layout. If <code>null</code> is passed <code>PatternFormatter</code> is used.
+         * @param minLevel	The min level listen by this layout. If <code>null</code> is passed <code>Level.ALL</code> is used.
+         * @param maxLevel	The max level listen by this layout. If <code>null</code> is passed <code>Level.FATAL</code> is used.
+         * @throws 	<code>org.skitools.exception.IllegalStateException</code> if passed-in min level is superior than max level.
          */
         public function TraceLayout(formatter : IFormatter = null, minLevel : Level = null, maxLevel : Level = null)
         {
