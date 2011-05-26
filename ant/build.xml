@@ -1,0 +1,122 @@
+<project name="rozenn" basedir="../">
+    
+    <property file="ant/build.properties"/>
+    
+    <!-- Set up Flex and FlexUnit ant tasks -->
+    <taskdef resource="flexUnitTasks.tasks" classpath="${flexUnitTasks.jar}"/>
+    
+    <!-- CLEAN API DOCUMENTATION -->
+    <target name="api-doc.clean">
+        <echo>[API Doc clean] Clean api doc directorie</echo>
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${apidoc.dir}" includes="**/*"/>
+        </delete>
+        <echo>[API Doc clean] api doc directorie cleaned</echo>
+    </target>
+    
+    <!-- Create directories needed for the build process -->
+    <target name="api-doc.init" depends="api-doc.clean">
+        <echo>[API Doc init] Creating api doc directorie</echo>
+        <mkdir dir="${apidoc.dir}"/>
+        <echo>[API Doc init] api doc directorie created</echo>
+    </target>
+    
+    <!-- BUILD API DOCUMENTATION -->
+    <target name="api-doc.generate" depends="api-doc.init, test">
+        <echo>[API Doc generate] Generating api doc</echo>
+        <java jar="${asdoc.jar}" fork="true" failonerror="true">
+            <arg line="+flexlib=${flex.home}/frameworks"/>
+            <arg line="-load-config=${flex.config}"/>
+            <arg line="-source-path=${src.dir}"/>
+            <arg line="-doc-sources=${src.dir}"/>
+            <arg line="-output=${apidoc.dir}"/>
+            <arg line="-main-title=${apidoc.title}"/>
+            <arg line="-window-title=${apidoc.title}"/>
+            <arg line="-footer=${apidoc.title}"/>
+            
+            <!-- PACKAGES DESCRIPTION -->
+            <arg line="-package org.rozenn 'Provides a set of tools application logging.'"/>
+            <arg line="-package org.rozenn.formatter 'Provides a set of tools to format logging messages.'"/>
+            <arg line="-package org.rozenn.formatter.converter 'Provides a set of converter used by PatternFormatter class.'"/>
+            <arg line="-package org.rozenn.layout 'Provides a set of logging outputs.'"/>
+            <arg line="-package org.rozenn.utils 'Contains Rozenn utils classes.'"/>
+        </java>
+        <echo>[API Doc generate] api doc generated</echo>
+    </target>
+    
+    <!-- COMPILE SWC FILE -->
+    <target name="swc.compile">
+        <echo>[SWC compile] Compiling SWC</echo>
+        <java jar="${compc.jar}" fork="true" failonerror="true">
+            <arg line="-load-config=${flex.config}"/>
+            <arg line="-include-sources=${src.dir}"/>
+            <arg line="-output=${bin.dir}/${swc.fileoutput}"/>
+            <arg line="-static-link-runtime-shared-libraries=true"/>
+            <arg value="-verbose-stacktraces=true"/>
+        </java>
+        <echo>[SWC compile] Release SWC ${swc.fileoutput} created successfully</echo>
+    </target>
+    
+    <!-- LAUNCH UNIT TESTS -->
+    <target name="test" depends="swc.compile">
+        <echo>[Unit tests] Running Unit Tests</echo>
+        <!-- Compile SWF -->
+        <java jar="${mxmlc.jar}" fork="true" failonerror="true">
+            <arg value="${test.dir}/RozennTestRunner.as"/>
+            <arg line="-load-config=${flex.config}"/>
+            <arg value="-source-path=${src.dir}"/>
+            <arg line="-output=${bin.dir}/${test.fileoutput}"/>
+            <arg line="-static-link-runtime-shared-libraries=true"/>
+            <arg value="-library-path+=${bin.dir}"/>
+            <arg value="-library-path+=${libs.dir}"/>
+            <arg value="-verbose-stacktraces=true"/>
+			<arg value="-headless-server=true"/>
+        </java>
+        
+        <!-- Execute TestEozenRunner.swf as FlexUnit tests and publish reports -->
+        <flexunit swf="${bin.dir}/${test.fileoutput}" toDir="${report.dir}" haltonfailure="true" verbose="true" localTrusted="true"/>
+        
+		<!-- Generate readable JUnit-style reports -->
+        <junitreport todir="${report.dir}">
+            <fileset dir="${report.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${report.dir}/html"/>
+        </junitreport>
+        <echo>[Unit tests] Finished running Unit Tests</echo>
+    </target>
+	
+	<target name="package" depends="test, api-doc.generate">
+		<echo>[package] Packaging Release</echo>
+		<delete dir="${dist.dir}" failonerror="false" />
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${dist.dir}/src" />
+		<mkdir dir="${dist.dir}/bin" />
+		<mkdir dir="${dist.dir}/asdoc" />
+		
+		<copy file="${bin.dir}/${swc.fileoutput}" todir="${dist.dir}/bin"/>
+		<copy todir="${dist.dir}/src">
+      		<fileset dir="${src.dir}"/>
+    	</copy>
+		<copy todir="${dist.dir}/asdoc">
+      		<fileset dir="${apidoc.dir}"/>
+    	</copy>
+		
+		<copy file="LICENSE" tofile="${dist.dir}/LICENSE" overwrite="true"/>
+		<copy file="README.rst" tofile="${dist.dir}/README" overwrite="true"/>
+		<copy file="CONTRIBUTORS" tofile="${dist.dir}/CONTRIBUTORS" overwrite="true"/>
+		
+		<zip destfile="${dist.dir}/${project.name}-${project.version}.zip">
+      		<fileset dir="${dist.dir}"/>
+    	</zip>
+		
+		<delete dir="${dist.dir}/src" />
+		<delete dir="${dist.dir}/bin" />
+		<delete dir="${dist.dir}/asdoc" />
+		<delete file="${dist.dir}/LICENSE" />
+		<delete file="${dist.dir}/README" />
+		<delete file="${dist.dir}/CONTRIBUTORS" />
+		<echo>[package] Release packaged successfully</echo>
+	</target>
+    
+</project>

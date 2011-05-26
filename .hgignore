@@ -1,0 +1,13 @@
+
+syntax: regexp
+^\.settings$
+syntax: regexp
+^\.project$
+syntax: regexp
+^report$
+syntax: regexp
+^doc/api-doc$
+syntax: regexp
+^dist$
+syntax: regexp
+^bin$
