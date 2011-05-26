@@ -73,6 +73,8 @@
 			<arg value="-headless-server=true"/>
         </java>
         
+		<mkdir dir="${report.dir}" />
+		
         <!-- Execute TestEozenRunner.swf as FlexUnit tests and publish reports -->
         <flexunit swf="${bin.dir}/${test.fileoutput}" toDir="${report.dir}" haltonfailure="true" verbose="true" localTrusted="true"/>
         

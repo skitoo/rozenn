@@ -35,13 +35,13 @@ package org.rozenn
             instance = Logger.getLogger(TestLogger);
             other = Logger.getLogger("org.other.Pwet");
             layout = new MyTestLayout();
-            Logging.getInstance().addLayout(layout);
+            Rozenn.registerLayout(layout);
         }
 
         [After]
         public function tearDown() : void
         {
-            Logging.getInstance().removeLayout(layout);
+            Rozenn.unregisterLayout(layout);
         }
 
         [Test]

@@ -69,6 +69,11 @@
 		/**
 		 * @private
 		 */
+		private var patternParser : PatternParser;
+		
+		/**
+		 * @private
+		 */
 		private var converters : Vector.<IConverter>;
 		
 		/**
@@ -83,6 +88,7 @@
 		 */
 		public function PatternFormatter(pattern : String=null)
 		{
+			patternParser = new PatternParser();
 			setPattern(pattern);
 		}
 		
@@ -104,7 +110,7 @@
         public function setPattern(pattern : String) : void
         {
         	this.pattern = pattern || DEFAULT_PATTERN;
-        	converters = PatternParser.getInstance().parse(this.pattern);
+        	converters = patternParser.parse(this.pattern);
         }
 
 		/**
