@@ -15,6 +15,7 @@
  */
 package org.rozenn.layout
 {
+    import org.rozenn.formatter.PatternFormatter;
     import org.rozenn.Level;
     import org.rozenn.LogRecord;
     import org.rozenn.formatter.IFormatter;
@@ -34,7 +35,7 @@ package org.rozenn.layout
          */
         public function TraceLayout(formatter : IFormatter = null, minLevel : Level = null, maxLevel : Level = null)
         {
-            super(formatter, minLevel, maxLevel);
+            super(formatter ? formatter : new PatternFormatter("%L [%C] %M"), minLevel, maxLevel);
         }
 
         /**
