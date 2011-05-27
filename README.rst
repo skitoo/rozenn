@@ -112,4 +112,24 @@ Table summary tags:
 +--------+-------------------------------------------------------------------------------------------------------------------------------------+
 
 
+Inheritance levels
+------------------
+Each Level Logger inherits from its parent unless of course that it is explicitly specified a Level.
+Only "root" logger, defined by the system, has no parent. Which indicates that by default every logger inherit the Level of the root.
 
+Consider the following example:
+
+.. image:: http://farm5.static.flickr.com/4134/4903514587_e8f5806609_o.jpg
+   :height: 505px
+   :width: 456px
+   :alt: Schema inheritance Loggers
+   :align: center
+
+In this example we specify that the root level to **WARN**.
+
+**com.scopart.utils** should have the default level **WARN** (**root** inheritance), but as for **org.skitools.mvc** you break the inheritance chain by specifying **FATAL** as standard. If **com.scopart.utils** one day have children, they will inherit the same level.
+
+Now consider what happens if say the logger "org.skitools" sends a message:
+   * The message **DEBUG** and **INFO** will not be logged because they possess a level below that specified in **org.skitools** (**WARN**).
+   * Messages **WARN**, **ERROR** and **FATAL** will be logged as they are greater than or equal to that specified in **org.skitools**.
+   
