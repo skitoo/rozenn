@@ -7,8 +7,6 @@ Logger
 ======
 The logger is the basic entity of the system logger. He is represented by the class **org.rozenn.Logger**.
 
-.. code-block:: actionscript
-   
    package
    {
       import org.rozenn.Logger;
@@ -42,8 +40,6 @@ Logging a message
 =================
 To log a message several methods of the Logger available to you:
 
-.. code-block:: actionscript
-   
    logger.log(Level.DEBUG, "debug message");
  
    // the same with debug method
