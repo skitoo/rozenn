@@ -1,7 +1,7 @@
 =====
 Eozen
 =====
-Rozenn is a Flash/AS3 logging system strongly inspired by the famous `Log4J <http://logging.apache.org/log4j/1.2/>`_ library. Like the latter, Rozenn offers a highly configurable, either at the inputs of records that the destination of the latter.
+Rozenn is a Flash/AS3 logging system strongly inspired by the famous `Log4J <http://logging.apache.org/log4j/1.2/>`_ library. Like the latter, Rozenn offers a highly configurable system, either at the inputs of records that the destination of the latter.
 
 Installation
 ============
@@ -37,7 +37,7 @@ Rozenn offers 5 levels of logging:
    * **INFO** – Used to inform the user that application runs correctly
    * **WARN** – This level designates potentially harmful situations.
    * **ERROR** – Indicates that an error has occurred. Application is not stopped.
-   * **FATAL** – Indicates a very serious error that occurred. Application can be stopped.
+   * **FATAL** – Indicates that a very serious error has occurred. Application can be stopped.
    
 Two other logging levels exist in Rozenn. However they are only used when configuring the system:
    * **OFF** – Indicates that no message is logged.
@@ -65,19 +65,19 @@ Outputs system write log
 ------------------------
 We have seen how to create messages with a level. Now let's see how to send different types of writing proposed by Rozenn. These outputs are represented by the interface **org.rozenn.layout.ILayout**.
 
-To date four implementations are provided with Rozenn:
+Today, four implementations are provided with Rozenn:
    * **org.rozenn.layout.TraceLayout** – Messages are sent to the Flash **trace** method. 
    * **org.rozenn.layout.AirLoggerLayout** – Messages are sent to `AirLogger <http://code.google.com/p/airlogger/>`_ application  developped by `Cédric Néhémie <http://book.abe.free.fr/blog/>`_.
    * **org.rozenn.layout.FlashInspectorLayout** – Messages are sent to FlashInspector application  developped by `Pablo Constantini <http://www.luminicbox.com/>`_.
-   * **org.rozenn.layout.FireBugLayout** – Messages are sent to the inevitable Firefox plugin `FireBug <http://getfirebug.com/>`_. Of course your SWF to be played with the browser, the messages appear in the module "Console" plugin.
+   * **org.rozenn.layout.FireBugLayout** – Messages are sent to the inevitable Firefox plugin `FireBug <http://getfirebug.com/>`_. Of course your SWF must be played with the browser, the messages appear in the module plugin "Console".
 
 Formatting messages
 -------------------
 Rozenn can format the logging messages. This action takes place before they are sent to a layout. The formatting of messages is done by classes implementing the interface **org.rozenn.formatter.IFormatter**. These objects are associated with the layouts.
 
 Rozenn offers two formatters:
-   * **org.rozenn.formatter.SimpleFormatter** – A formatter very simple: it passes the message body to layout as that is.
-   * **org.rozenn.formatter.PatternFormatter** – This formatter is more advanced. Its constructor takes a pattern that will define the form that will take a message once sent to the layout.
+   * **org.rozenn.formatter.SimpleFormatter** – A formatter very simple: passes the message body to layout.
+   * **org.rozenn.formatter.PatternFormatter** – This formatter is more advanced. Its constructor takes a pattern that will define the form taken by a message once sent to the layout.
    
 Example for pattern **%L [%C] %M** :
 
@@ -114,8 +114,8 @@ Table summary tags:
 
 Inheritance levels
 ------------------
-Each Level Logger inherits from its parent unless of course that it is explicitly specified a Level.
-Only "root" logger, defined by the system, has no parent. Which indicates that by default every logger inherit the Level of the root.
+Each Level Logger inherits from its parent unless that a level is explicitly specified.
+Only "root" logger, defined by the system, has no parent. Which indicates that by default every logger inherit the root level.
 
 Consider the following example:
 
@@ -129,13 +129,13 @@ In this example we specify that the root level to **WARN**.
 
 **com.scopart.utils** should have the default level **WARN** (**root** inheritance), but as for **org.skitools.mvc** you break the inheritance chain by specifying **FATAL** as standard. If **com.scopart.utils** one day have children, they will inherit the same level.
 
-Now consider what happens if say the logger "org.skitools" sends a message:
-   * The message **DEBUG** and **INFO** will not be logged because they possess a level below that specified in **org.skitools** (**WARN**).
+Now consider what happens if the logger "org.skitools" sends a message:
+   * The message **DEBUG** and **INFO** will not be logged because they have a level below that is specified in **org.skitools** (**WARN**).
    * Messages **WARN**, **ERROR** and **FATAL** will be logged as they are greater than or equal to that specified in **org.skitools**.
    
 Configuring the logging system
 ------------------------------
-Here is a small example of system configuration logging Rozenn:
+Here is a small example of Rozenn system configuration logging :
 
 ::
 
