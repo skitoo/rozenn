@@ -133,3 +133,46 @@ Now consider what happens if say the logger "org.skitools" sends a message:
    * The message **DEBUG** and **INFO** will not be logged because they possess a level below that specified in **org.skitools** (**WARN**).
    * Messages **WARN**, **ERROR** and **FATAL** will be logged as they are greater than or equal to that specified in **org.skitools**.
    
+Configuring the logging system
+------------------------------
+Here is a small example of system configuration logging Rozenn:
+
+::
+
+   package com.scopart
+   {
+      import org.rozenn.Level;
+      import org.rozenn.Logger;
+      import org.rozenn.Logging;
+      import org.rozenn.formatter.PatternFormatter;
+      import org.rozenn.layout.FirebugLayout;
+      import org.rozenn.layout.TraceLayout;
+    
+      import flash.display.Sprite;
+    
+      public class MyClass extends Sprite
+      {
+         private static var logger : Logger = Logger.getLogger(MyClass);
+    
+         public function MyClass()
+         {
+            // Recording a TraceLayout in the system
+            // It uses by default "org.rozenn.formatter.PatternFormatter" with the pattern "%L [%C] %M"
+            Rozenn.registerLayout(new TraceLayout());
+            
+            // Recording a FirebugLayout in the system
+            // It uses a PatternFormatter to format messages
+            Rozenn.registerLayout(new FirebugLayout(new PatternFormatter("%L [%C] %M")));
+    
+            // Specifying a level for the logger
+            logger.setLevel(Level.ERROR);
+    
+            // This message will not be logged as below ERROR specified in the Logger
+            logger.debug("message 1"); 
+    
+            // The following two messages will be logged as greater than or equal to ERROR
+            logger.error("message 2");
+            logger.fatal("message 3");
+         }
+      }
+   }
