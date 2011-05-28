@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="com.powerflasher.fdt.ui.editor.template.as3" deleted="false" description="Add logger to the class" enabled="true" name="rozenn_logger">/**
+ * @private
+ */
+private static var logger : Logger = Logger.getLogger(${enclosing_type});</template></templates>

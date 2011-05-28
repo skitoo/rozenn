@@ -95,6 +95,7 @@
 		<mkdir dir="${dist.dir}/src" />
 		<mkdir dir="${dist.dir}/bin" />
 		<mkdir dir="${dist.dir}/asdoc" />
+		<mkdir dir="${dist.dir}/tools" />
 		
 		<copy file="${bin.dir}/${swc.fileoutput}" todir="${dist.dir}/bin"/>
 		<copy todir="${dist.dir}/src">
@@ -103,6 +104,9 @@
 		<copy todir="${dist.dir}/asdoc">
       		<fileset dir="${apidoc.dir}"/>
     	</copy>
+		<copy todir="${dist.dir}/tools">
+			<fileset dir="${tools.dir}"/>
+		</copy>
 		
 		<copy file="LICENSE" tofile="${dist.dir}/LICENSE" overwrite="true"/>
 		<copy file="README.rst" tofile="${dist.dir}/README" overwrite="true"/>
@@ -115,6 +119,7 @@
 		<delete dir="${dist.dir}/src" />
 		<delete dir="${dist.dir}/bin" />
 		<delete dir="${dist.dir}/asdoc" />
+		<delete dir="${dist.dir}/tools" />
 		<delete file="${dist.dir}/LICENSE" />
 		<delete file="${dist.dir}/README" />
 		<delete file="${dist.dir}/CONTRIBUTORS" />
