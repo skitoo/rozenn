@@ -1,6 +1,12 @@
 =====
 Eozen
 =====
+
+.. image:: http://farm3.static.flickr.com/2652/5776052009_7eb9387bf3_o.jpg
+   :height: 334px
+   :width: 81px
+   :alt: Rozenn logo
+   :align: center
 Rozenn is a Flash/AS3 logging system strongly inspired by the famous `Log4J <http://logging.apache.org/log4j/1.2/>`_ library. Like the latter, Rozenn offers a highly configurable system, either at the inputs of records that the destination of the latter.
 
 Installation
