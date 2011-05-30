@@ -65,12 +65,13 @@ Outputs system write log
 ------------------------
 We have seen how to create messages with a level. Now let's see how to send different types of writing proposed by Rozenn. These outputs are represented by the interface **org.rozenn.layout.ILayout**.
 
-Today, four implementations are provided with Rozenn:
+Today, five implementations are provided with Rozenn:
    * **org.rozenn.layout.TraceLayout** – Messages are sent to the Flash **trace** method. 
    * **org.rozenn.layout.AirLoggerLayout** – Messages are sent to `AirLogger <http://code.google.com/p/airlogger/>`_ application  developped by `Cédric Néhémie <http://book.abe.free.fr/blog/>`_.
    * **org.rozenn.layout.FlashInspectorLayout** – Messages are sent to FlashInspector application  developped by `Pablo Constantini <http://www.luminicbox.com/>`_.
    * **org.rozenn.layout.FireBugLayout** – Messages are sent to the inevitable Firefox plugin `FireBug <http://getfirebug.com/>`_. Of course your SWF must be played with the browser, the messages appear in the module plugin "Console".
-
+   * **org.rozenn.layout.SOSMaxLayout** - Messages are sent to `SOSMax <http://www.sos.powerflasher.com/>`_ 'Socket Output Server'.
+   
 Formatting messages
 -------------------
 Rozenn can format the logging messages. This action takes place before they are sent to a layout. The formatting of messages is done by classes implementing the interface **org.rozenn.formatter.IFormatter**. These objects are associated with the layouts.
