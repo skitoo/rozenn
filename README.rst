@@ -1,6 +1,6 @@
-=====
-Eozen
-=====
+======
+Rozenn
+======
 
 .. image:: http://farm3.static.flickr.com/2652/5776052009_7eb9387bf3_o.jpg
    :height: 81px
